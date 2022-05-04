@@ -1,0 +1,15 @@
+export const SAVE_PRODUCT = 'SAVE_PRODUCT';
+export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
+export const DELETE_PRODUCT = 'DELETE_PRODUCT';
+export const LOAD_PRODUCT = 'LOAD_PRODUCT';
+export const LOAD_PRODUCT_DTO = 'LOAD_PRODUCT_DTO';
+export const LOAD_PAGE_PRODUCT = 'LOAD_PAGE_PRODUCT';
+export const IS_LOADING_PRODUCT = 'IS_LOADING_PRODUCT';
+
+export const SAVE_USER = 'SAVE_USER';
+export const UPDATE_USER = 'UPDATE_USER';
+export const DELETE_USER = 'DELETE_USER';
+export const LOAD_USER = 'LOAD_USER';
+export const IS_LOADING_USER = 'IS_LOADING_USER';
+
+export const SET_MESSAGE = 'SET_MESSAGE';

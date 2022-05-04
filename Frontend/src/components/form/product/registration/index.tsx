@@ -1,0 +1,63 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useEffect } from 'react';
+import { Product } from 'app/models/product';
+import { useProductService } from 'app/services';
+import { ProductForm } from './form';
+import { useRouter } from 'next/dist/client/router';
+import { SaveProduct, UpdateProduct } from 'store/actions/product';
+import { connect, ConnectedProps } from 'react-redux';
+
+type Props = PropsFromRedux;
+
+const ProductRegistration = (props: Props) => {
+  const service = useProductService();
+  const [product, setProduct] = useState<Product>();
+  const router = useRouter();
+  const { id } = router.query;
+
+  useEffect(() => {
+    if (id) {
+      service.loadProduct(id).then((productFind) => setProduct(productFind));
+    }
+  }, [id]);
+
+  const handleSubmit = async (product: Product, { resetForm, setValues }) => {
+    if (product.id > 0) {
+      if (await props.updateProduct(product)) {
+        resetForm();
+        setValues({ id: '', name: '', blocked: '', quantMin: '', categoryId: null });
+        router.replace('/cadastros/produtos');
+      }
+    } else {
+      if (await props.saveProduct(product)) {
+        resetForm();
+      }
+    }
+  };
+
+  return (
+    <div className="card bg-light my-2 mx-auto col-md-8" style={{}}>
+      <h4 className="card-header ">Produto</h4>
+      <ProductForm product={product} onSubmit={handleSubmit} isLoading={props.isLoading} />
+      <div className="card-body"></div>
+    </div>
+  );
+};
+
+const mapStateToProps = ({ product }) => {
+  return {
+    product: product.product as Product[],
+    isLoading: product.isLoading,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    saveProduct: (product: Product) => dispatch(SaveProduct(product)),
+    updateProduct: (product: Product) => dispatch(UpdateProduct(product)),
+  };
+};
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+export default connector(ProductRegistration);
