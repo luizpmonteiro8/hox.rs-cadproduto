@@ -9,11 +9,9 @@ import { connect, ConnectedProps } from 'react-redux';
 import { DeleteProduct, LoadPageProduct } from 'store/actions/product';
 import { Input } from 'components/common/input';
 import { formatReal } from 'app/util/money';
+import { Loading } from 'components/common/loading';
 
-interface Props extends PropsFromRedux {
-  setLoading: Dispatch<SetStateAction<boolean>>;
-  loading: boolean;
-}
+type Props = PropsFromRedux;
 
 const ProductListing = (props: Props) => {
   const router = useRouter();
@@ -33,11 +31,14 @@ const ProductListing = (props: Props) => {
   const [size, setSize] = useState(10);
   const [orderValue, setOrder] = useState('asc');
   const [fieldValue, setField] = useState('name');
+  const [loading, setLoading] = useState(false);
+
+  console.log(loading);
 
   useEffect(() => {
-    props.setLoading(true);
+    setLoading(true);
     props.loadPageProduct(0);
-    props.setLoading(false);
+    setLoading(false);
   }, []);
 
   const columns = [
@@ -46,11 +47,11 @@ const ProductListing = (props: Props) => {
       text: 'ID',
       sort: true,
       onSort: (field, order) => {
-        props.setLoading(true);
+        setLoading(true);
         setOrder(orderValue === 'asc' ? 'desc' : 'asc');
         setField(field);
         props.loadPageProduct(0, size, search, orderValue === 'asc' ? 'desc' : 'asc', field);
-        props.setLoading(false);
+        setLoading(false);
       },
     },
     {
@@ -58,11 +59,11 @@ const ProductListing = (props: Props) => {
       text: 'Nome',
       sort: true,
       onSort: (field, order) => {
-        props.setLoading(true);
+        setLoading(true);
         setOrder(orderValue === 'asc' ? 'desc' : 'asc');
         setField(field);
         props.loadPageProduct(0, size, search, orderValue === 'asc' ? 'desc' : 'asc', field);
-        props.setLoading(false);
+        setLoading(false);
       },
     },
     {
@@ -70,11 +71,11 @@ const ProductListing = (props: Props) => {
       text: 'Data de fabricação',
       sort: true,
       onSort: (field, order) => {
-        props.setLoading(true);
+        setLoading(true);
         setOrder(orderValue === 'asc' ? 'desc' : 'asc');
         setField(field);
         props.loadPageProduct(0, size, search, orderValue === 'asc' ? 'desc' : 'asc', field);
-        props.setLoading(false);
+        setLoading(false);
       },
       formatter: (cellContent, row) => {
         if (typeof row !== 'undefined') {
@@ -94,11 +95,11 @@ const ProductListing = (props: Props) => {
       formatter: (cellContent, row) => <div>{row.perishableProduct ? 'Sim' : 'Não'}</div>,
       sort: true,
       onSort: (field, order) => {
-        props.setLoading(true);
+        setLoading(true);
         setOrder(orderValue === 'asc' ? 'desc' : 'asc');
         setField(field);
         props.loadPageProduct(0, size, search, orderValue === 'asc' ? 'desc' : 'asc', field);
-        props.setLoading(false);
+        setLoading(false);
       },
     },
     {
@@ -106,11 +107,11 @@ const ProductListing = (props: Props) => {
       text: 'Data de expiração',
       sort: true,
       onSort: (field, order) => {
-        props.setLoading(true);
+        setLoading(true);
         setOrder(orderValue === 'asc' ? 'desc' : 'asc');
         setField(field);
         props.loadPageProduct(0, size, search, orderValue === 'asc' ? 'desc' : 'asc', field);
-        props.setLoading(false);
+        setLoading(false);
       },
       formatter: (cellContent, row) => {
         if (typeof row !== 'undefined') {
@@ -129,11 +130,11 @@ const ProductListing = (props: Props) => {
       text: 'Preço',
       sort: true,
       onSort: (field, order) => {
-        props.setLoading(true);
+        setLoading(true);
         setOrder(orderValue === 'asc' ? 'desc' : 'asc');
         setField(field);
         props.loadPageProduct(0, size, search, orderValue === 'asc' ? 'desc' : 'asc', field);
-        props.setLoading(false);
+        setLoading(false);
       },
       formatter: (cellContent, row) => <div>R$ {formatReal(String(row.price))}</div>,
     },
@@ -164,6 +165,7 @@ const ProductListing = (props: Props) => {
 
   return (
     <Styled.Wrapper>
+      {loading && <Loading />}
       <div className="row m-2">
         <div className="col-6 ">
           <Input
@@ -209,9 +211,9 @@ const ProductListing = (props: Props) => {
                 <button
                   className="page-link"
                   onClick={() => {
-                    props.setLoading(true);
+                    setLoading(true);
                     props.loadPageProduct(0, size, search, orderValue, fieldValue);
-                    props.setLoading(false);
+                    setLoading(false);
                   }}
                 >
                   Primeira
@@ -221,9 +223,9 @@ const ProductListing = (props: Props) => {
                 <button
                   className="page-link"
                   onClick={() => {
-                    props.setLoading(true);
+                    setLoading(true);
                     props.loadPageProduct(props.pagination.page - 1, size, search, orderValue, fieldValue);
-                    props.setLoading(false);
+                    setLoading(false);
                   }}
                 >
                   Anterior
@@ -240,9 +242,9 @@ const ProductListing = (props: Props) => {
                 <button
                   className="page-link"
                   onClick={() => {
-                    props.setLoading(true);
+                    setLoading(true);
                     props.loadPageProduct(props.pagination.page + 1, size, search, orderValue, fieldValue);
-                    props.setLoading(false);
+                    setLoading(false);
                   }}
                 >
                   Próxima
@@ -256,9 +258,9 @@ const ProductListing = (props: Props) => {
                 <button
                   className="page-link"
                   onClick={() => {
-                    props.setLoading(true);
+                    setLoading(true);
                     props.loadPageProduct(props.pagination.lastPage, size, search, orderValue, fieldValue);
-                    props.setLoading(false);
+                    setLoading(false);
                   }}
                 >
                   Ultima
