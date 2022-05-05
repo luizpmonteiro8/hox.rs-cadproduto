@@ -22,7 +22,7 @@ export const Menu = ({ title }: MenuProps) => {
         <div className="col-md-12">
           <nav className="navbar navbar-expand-lg navbar-dark bg-primary ">
             <div className="col-md-3 ms-1">
-              <a className="navbar-brand text-color" href="/home">
+              <a className="navbar-brand text-color" href="/lista/produtos">
                 Cadastro de produtos
               </a>
             </div>
