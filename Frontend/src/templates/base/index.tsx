@@ -1,6 +1,5 @@
 import { Menu } from 'components';
 import { useEffect, useContext } from 'react';
-import { Footer } from 'components/footer';
 import * as Styled from './styles';
 import { ToastContainer } from 'react-toastify';
 import { useSession } from 'next-auth/react';
@@ -36,11 +35,11 @@ export const Base = ({ children }: BaseProps) => {
           draggable
           pauseOnHover
         />
+
         {status === 'authenticated' && (
           <Styled.ContentContainer className="col-md-12 ">{children}</Styled.ContentContainer>
         )}
       </Styled.Container>
-      <Styled.FooterContainer className="col-md-12"></Styled.FooterContainer>
     </Styled.Wrapper>
   );
 };

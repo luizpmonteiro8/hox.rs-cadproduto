@@ -1,10 +1,3 @@
-export const converterEmBigDecimal = (value): number => {
-  if (!value) {
-    return 0;
-  }
-  return value.replace('.', '').replace(',', '.');
-};
-
 export const formatReal = (valor) => {
   const v = ((valor.replace(/\D/g, '') / 100).toFixed(2) + '').split('.');
 

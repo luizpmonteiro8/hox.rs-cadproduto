@@ -1,9 +1,6 @@
 import { useFormik } from 'formik';
 import { Input } from 'components/common/input';
 import { validationScheme } from './validationScheme';
-import { useState } from 'react';
-import { AutoComplete } from 'components/common/autoComplete';
-import { convertDataAutoComplete } from 'components/common/autoComplete/convertdata';
 import { useRouter } from 'next/dist/client/router';
 import { Product } from 'app/models/product';
 
@@ -60,6 +57,24 @@ export const ProductForm = ({ product, onSubmit, isLoading }: ProductFormProps) 
             />
           </div>
 
+          <div className="col-md-12 my-2">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              id="perishableProduct"
+              onChange={() => {
+                formik.setFieldValue('perishableProduct', !formik.values.perishableProduct);
+                if (formik.values.perishableProduct == true) {
+                  formik.setFieldValue('expirationDate', '');
+                }
+              }}
+              checked={formik.values.perishableProduct ? true : false}
+            />
+            <label className="form-check-label" htmlFor="blocked">
+              Perecível
+            </label>
+          </div>
+
           <div className="col-md-6 ">
             <Input
               id="productionDate"
@@ -67,7 +82,7 @@ export const ProductForm = ({ product, onSubmit, isLoading }: ProductFormProps) 
               onChange={formik.handleChange}
               label="Data de fabricação"
               type="date"
-              value={String(formik.values.productionDate)}
+              value={String(formik.values.productionDate).split('T')[0]}
               error={
                 formik.errors.productionDate && formik.touched.productionDate
                   ? String(formik.errors.productionDate)
@@ -80,29 +95,17 @@ export const ProductForm = ({ product, onSubmit, isLoading }: ProductFormProps) 
             <Input
               id="expirationDate"
               name="expirationDate"
+              disabled={formik.values.perishableProduct ? false : true}
               onChange={formik.handleChange}
               label="Data de validade"
               type="date"
-              value={String(formik.values.expirationDate)}
+              value={String(formik.values.expirationDate).split('T')[0]}
               error={
                 formik.errors.expirationDate && formik.touched.expirationDate
                   ? String(formik.errors.expirationDate)
                   : ''
               }
             />
-          </div>
-
-          <div className="col-md-12 ">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              id="perishableProduct"
-              onChange={formik.handleChange}
-              defaultChecked={formik.values.perishableProduct ? true : false}
-            />
-            <label className="form-check-label" htmlFor="blocked">
-              Perecível
-            </label>
           </div>
 
           <div className="col-md-6 ">
@@ -112,7 +115,7 @@ export const ProductForm = ({ product, onSubmit, isLoading }: ProductFormProps) 
               onChange={(e) => formik.setFieldValue('price', e.target.value)}
               label="Preço"
               type="number"
-              value={formik.values.price == null ? '' : formik.values.price}
+              value={formik.values.price == null || formik.values.price === 0 ? '' : formik.values.price}
               error={formik.touched.price && formik.errors.price ? formik.errors.price : ''}
             />
           </div>

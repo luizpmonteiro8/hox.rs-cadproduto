@@ -20,7 +20,7 @@ export const Menu = ({ title }: MenuProps) => {
     <Styled.Wrapper>
       <div className="row">
         <div className="col-md-12">
-          <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+          <nav className="navbar navbar-expand-lg navbar-dark bg-primary ">
             <div className="col-md-3 ms-1">
               <a className="navbar-brand text-color" href="/home">
                 Cadastro de produtos
@@ -49,24 +49,11 @@ export const Menu = ({ title }: MenuProps) => {
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
-                      Cadastrar/Listar
+                      Cadastrar
                     </a>
                     <div className="dropdown-menu">
-                      <a className="dropdown-item" href="/cadastros/mercados">
-                        Mercados
-                      </a>
-                      <a className="dropdown-item" href="/cadastros/categorias">
-                        Categorias
-                      </a>
                       <a className="dropdown-item" href="/cadastros/produtos">
                         Produtos
-                      </a>
-                      <a className="dropdown-item" href="/cadastros/entradasaida">
-                        Entrada/Saida
-                      </a>
-                      <div className="dropdown-divider"></div>
-                      <a className="dropdown-item" href="/cadastros/usuario">
-                        Usuário
                       </a>
                     </div>
                   </li>
@@ -79,44 +66,22 @@ export const Menu = ({ title }: MenuProps) => {
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
-                      Compras
+                      Listar
                     </a>
                     <div className="dropdown-menu">
-                      <a className="dropdown-item" href="/compras/cadastro">
-                        Nova compras
+                      <a className="dropdown-item" href="/lista/produtos">
+                        Produtos
                       </a>
                     </div>
-                  </li>
-                  <li className="nav-item dropdown ">
-                    <a
-                      className="dropdown-toggle text-color"
-                      data-bs-toggle="dropdown"
-                      href="#"
-                      role="button"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Relatórios
-                    </a>
-                    <div className="dropdown-menu">
-                      <a className="dropdown-item" href="/relatorios/estoque">
-                        Estoque
-                      </a>
-                      <a className="dropdown-item" href="/compras/lista">
-                        Compras
-                      </a>
-                      <div className="dropdown-divider"></div>
-                    </div>
-                  </li>
-                  <li className="nav-item dropdown ">
-                    <button type="button" className="btn btn-light" onClick={() => logout()}>
-                      <text>Sair</text>
-                    </button>
                   </li>
                 </ul>
               </div>
             </div>
-            <div className="col-md-3"></div>
+            <div className="col-md-3">
+              <a className="btn btn-light" href="#" role="button" onClick={() => logout()}>
+                Sair
+              </a>
+            </div>
           </nav>
         </div>
       </div>

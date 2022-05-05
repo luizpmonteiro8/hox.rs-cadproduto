@@ -17,6 +17,7 @@ interface InputProps extends React.LinkHTMLAttributes<HTMLInputElement> {
   type?: string;
   min?: string;
   step?: string;
+  autoComplete?: string;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -30,6 +31,7 @@ export const Input: React.FC<InputProps> = ({
   name,
   value,
   type,
+  autoComplete,
   ...inputProps
 }: InputProps) => {
   const onInputChange = (event) => {
@@ -63,6 +65,7 @@ export const Input: React.FC<InputProps> = ({
           name={name}
           value={value}
           type={type}
+          autoComplete={autoComplete}
           ref={
             autoFocusValue && firstLoading
               ? function (input) {

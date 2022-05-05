@@ -27,7 +27,7 @@ export const MenuContainer = styled.div`
   ${({ theme }) => css``}
 `;
 
-export const FooterContainer = styled.div`
+export const ToastContainer = styled.div`
   ${({ theme }) => css``}
 `;
 

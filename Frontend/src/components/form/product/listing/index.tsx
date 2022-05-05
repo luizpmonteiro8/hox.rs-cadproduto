@@ -1,5 +1,5 @@
 import BootstrapTable from 'react-bootstrap-table-next';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { Product } from 'app/models/product';
 import { useRouter } from 'next/router';
 import { Modal } from 'react-bootstrap';
@@ -7,8 +7,13 @@ import Button from 'react-bootstrap/Button';
 import * as Styled from './styles';
 import { connect, ConnectedProps } from 'react-redux';
 import { DeleteProduct, LoadPageProduct } from 'store/actions/product';
+import { Input } from 'components/common/input';
+import { formatReal } from 'app/util/money';
 
-type Props = PropsFromRedux;
+interface Props extends PropsFromRedux {
+  setLoading: Dispatch<SetStateAction<boolean>>;
+  loading: boolean;
+}
 
 const ProductListing = (props: Props) => {
   const router = useRouter();
@@ -24,37 +29,101 @@ const ProductListing = (props: Props) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [search, setSearch] = useState('');
+  const [size, setSize] = useState(10);
+  const [orderValue, setOrder] = useState('asc');
+  const [fieldValue, setField] = useState('');
 
   useEffect(() => {
-    props.loadAll();
+    props.setLoading(true);
+    props.loadPageProduct(0);
+    props.setLoading(false);
   }, []);
 
   const columns = [
     {
       dataField: 'id',
       text: 'ID',
+      sort: true,
+      onSort: (field, order) => {
+        setOrder(orderValue === 'asc' ? 'desc' : 'asc');
+        setField(field);
+        props.loadPageProduct(0, size, search, orderValue === 'asc' ? 'desc' : 'asc', field);
+      },
     },
     {
       dataField: 'name',
       text: 'Nome',
       sort: true,
+      onSort: (field, order) => {
+        setOrder(orderValue === 'asc' ? 'desc' : 'asc');
+        setField(field);
+        props.loadPageProduct(0, size, search, orderValue === 'asc' ? 'desc' : 'asc', field);
+      },
     },
     {
       dataField: 'productionDate',
       text: 'Data de fabricação',
+      sort: true,
+      onSort: (field, order) => {
+        setOrder(orderValue === 'asc' ? 'desc' : 'asc');
+        setField(field);
+        props.loadPageProduct(0, size, search, orderValue === 'asc' ? 'desc' : 'asc', field);
+      },
+      formatter: (cellContent, row) => {
+        if (typeof row !== 'undefined') {
+          const dateFormat: Date = new Date(String(row.productionDate).slice(0, 19));
+          dateFormat.setHours(dateFormat.getHours() + 3);
+          return (
+            <div>
+              {dateFormat.toLocaleDateString('pt-BR') !== 'Invalid Date' ? dateFormat.toLocaleDateString('pt-BR') : ''}
+            </div>
+          );
+        }
+      },
     },
     {
       dataField: 'perishableProduct',
       text: 'Perecível',
       formatter: (cellContent, row) => <div>{row.perishableProduct ? 'Sim' : 'Não'}</div>,
+      sort: true,
+      onSort: (field, order) => {
+        setOrder(orderValue === 'asc' ? 'desc' : 'asc');
+        setField(field);
+        props.loadPageProduct(0, size, search, orderValue === 'asc' ? 'desc' : 'asc', field);
+      },
     },
     {
       dataField: 'expirationDate',
       text: 'Data de expiração',
+      sort: true,
+      onSort: (field, order) => {
+        setOrder(orderValue === 'asc' ? 'desc' : 'asc');
+        setField(field);
+        props.loadPageProduct(0, size, search, orderValue === 'asc' ? 'desc' : 'asc', field);
+      },
+      formatter: (cellContent, row) => {
+        if (typeof row !== 'undefined') {
+          const dateFormat: Date = new Date(String(row.expirationDate).slice(0, 19));
+          dateFormat.setHours(dateFormat.getHours() + 3);
+          return (
+            <div>
+              {dateFormat.toLocaleDateString('pt-BR') !== 'Invalid Date' ? dateFormat.toLocaleDateString('pt-BR') : ''}
+            </div>
+          );
+        }
+      },
     },
     {
       dataField: 'price',
-      text: 'Bloqueado',
+      text: 'Preço',
+      sort: true,
+      onSort: (field, order) => {
+        setOrder(orderValue === 'asc' ? 'desc' : 'asc');
+        setField(field);
+        props.loadPageProduct(0, size, search, orderValue === 'asc' ? 'desc' : 'asc', field);
+      },
+      formatter: (cellContent, row) => <div>R$ {formatReal(String(row.price))}</div>,
     },
     {
       dataField: 'Editar',
@@ -63,7 +132,7 @@ const ProductListing = (props: Props) => {
       csvExport: false,
       formatter: (cell, row: Product) => (
         <div>
-          <a onClick={() => router.replace(`/cadastros/produtos?id=${row.id}`)} className="btn btn-warning me-1">
+          <a onClick={() => router.replace(`/cadastros/produtos?id=${row?.id}`)} className="btn btn-warning me-1">
             Alterar
           </a>
           <button
@@ -83,18 +152,101 @@ const ProductListing = (props: Props) => {
 
   return (
     <Styled.Wrapper>
+      <div className="row m-2">
+        <div className="col-6 ">
+          <Input
+            id="search"
+            name="search"
+            onChange={async (e) => {
+              setSearch(e.target.value);
+              setOrder('asc');
+              setField('name');
+              props.loadPageProduct(0, size, e.target.value, orderValue, fieldValue);
+            }}
+            value={search}
+            label="Busca"
+            autoComplete="off"
+          />
+        </div>
+      </div>
+
+      <h5>TOTAL DE ITENS: {props.pagination?.length}</h5>
+
       {props.product.length >= 1 && (
-        <BootstrapTable
-          wrapperClasses="table-responsive-md"
-          keyField="id"
-          data={props.product}
-          columns={columns}
-          noDataIndication="Nenhum valor encontrado."
-          bootstrap4
-          hover
-          striped
-          bordered={false}
-        />
+        <Styled.Table>
+          <BootstrapTable
+            wrapperClasses="table-responsive-md"
+            keyField="id"
+            data={props.product}
+            columns={columns}
+            noDataIndication="Nenhum valor encontrado."
+            bootstrap4
+            hover
+            striped
+            bordered={false}
+          />
+        </Styled.Table>
+      )}
+      {props.product.length == 0 && <h1 className="m-2">Nenhum valor encontrado.</h1>}
+
+      {props.pagination && (
+        <div className="row d-flex justify-content-center">
+          <nav>
+            <ul className="pagination">
+              <li className={`page-item ${props.pagination.page === 0 ? 'disabled' : ''}`}>
+                <button
+                  className="page-link"
+                  onClick={() => {
+                    props.loadPageProduct(0, size, search, orderValue, fieldValue);
+                  }}
+                >
+                  Primeira
+                </button>
+              </li>
+              <li className={`page-item ${props.pagination.page === 0 ? 'disabled' : ''}`}>
+                <button
+                  className="page-link"
+                  onClick={() => {
+                    props.loadPageProduct(props.pagination.page - 1, size, search, orderValue, fieldValue);
+                  }}
+                >
+                  Anterior
+                </button>
+              </li>
+              <li className="page-item disabled">
+                <span className="page-link">{String(props.pagination.page + 1)}</span>
+              </li>
+              <li
+                className={`page-item ${
+                  props.pagination.page === props.pagination.lastPage || props.pagination.length == 0 ? 'disabled' : ''
+                }`}
+              >
+                <button
+                  className="page-link"
+                  onClick={() => {
+                    props.loadPageProduct(props.pagination.page + 1, size, search, orderValue, fieldValue);
+                  }}
+                >
+                  Próxima
+                </button>
+              </li>
+              <li
+                className={`page-item ${
+                  props.pagination.page === props.pagination.lastPage || props.pagination.length == 0 ? 'disabled' : ''
+                }`}
+              >
+                <button
+                  className="page-link"
+                  onClick={() => {
+                    props.loadPageProduct(props.pagination.lastPage, size, search, orderValue, fieldValue);
+                  }}
+                >
+                  Ultima
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </div>
       )}
 
       <Modal show={show} onHide={handleClose}>
@@ -106,7 +258,7 @@ const ProductListing = (props: Props) => {
           <Button
             variant="danger"
             onClick={() => {
-              props.delete(productDelete.id);
+              props.delete(productDelete?.id);
               handleClose();
             }}
           >
@@ -124,12 +276,14 @@ const ProductListing = (props: Props) => {
 const mapStateToProps = ({ product }) => {
   return {
     product: product.product as Product[],
+    pagination: product.pagination,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadAll: () => dispatch(LoadPageProduct()),
+    loadPageProduct: (page: number, size?: number, search?: string, order?: string, sort?: string) =>
+      dispatch(LoadPageProduct(page, size, search, order, sort)),
     delete: (id) => dispatch(DeleteProduct(id)),
   };
 };

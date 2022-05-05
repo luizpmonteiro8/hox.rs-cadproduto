@@ -11,11 +11,13 @@ export class ProductRepository {
   async paginate(page: number, size: number, sort: string, order: string, search: string) {
     const results = await this.prisma.product.findMany({
       skip: page * size,
-      take: size,
-      where: { name: { contains: search } },
+      take: Number(size),
+      where: { name: { contains: search, mode: 'insensitive' } },
       orderBy: { [sort]: order },
     });
-    const totalItems = results.length;
+
+    const totalItems = await this.prisma.product.count({ where: { name: { contains: search } } });
+
     return { results, totalItems };
   }
 

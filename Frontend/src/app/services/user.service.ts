@@ -15,7 +15,7 @@ export const useUserService = () => {
 
   const update = async (user: User): Promise<void> => {
     const url = '${resourceURL}/${user.id}';
-    await httpClient.put<User>(url, user);
+    await httpClient.patch<User>(url, user);
   };
 
   const deleteUser = async (id): Promise<void> => {

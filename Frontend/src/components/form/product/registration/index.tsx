@@ -1,38 +1,55 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { Product } from 'app/models/product';
 import { useProductService } from 'app/services';
 import { ProductForm } from './form';
 import { useRouter } from 'next/dist/client/router';
 import { SaveProduct, UpdateProduct } from 'store/actions/product';
 import { connect, ConnectedProps } from 'react-redux';
+import { messageSucess } from 'components/common/toastr';
 
-type Props = PropsFromRedux;
+interface Props extends PropsFromRedux {
+  setLoading: Dispatch<SetStateAction<boolean>>;
+  loading: boolean;
+}
 
 const ProductRegistration = (props: Props) => {
-  const service = useProductService();
   const [product, setProduct] = useState<Product>();
   const router = useRouter();
   const { id } = router.query;
 
   useEffect(() => {
+    props.setLoading(true);
     if (id) {
-      service.loadProduct(id).then((productFind) => setProduct(productFind));
+      setProduct(props.product.filter((item) => String(item.id) === id)[0]);
     }
+    props.setLoading(false);
   }, [id]);
 
   const handleSubmit = async (product: Product, { resetForm, setValues }) => {
-    if (product.id > 0) {
-      if (await props.updateProduct(product)) {
-        resetForm();
-        setValues({ id: '', name: '', blocked: '', quantMin: '', categoryId: null });
-        router.replace('/cadastros/produtos');
+    props.setLoading(true);
+    try {
+      if (product.id > 0) {
+        if (await props.updateProduct(product)) {
+          messageSucess('Salvo com sucesso');
+          resetForm();
+          setValues({ id: null, name: '', productionDate: '', perishableProduct: false, expirationDate: '', price: 0 });
+          router.replace('/lista/produtos');
+        }
+      } else {
+        if (await props.saveProduct(product)) {
+          messageSucess('Salvo com sucesso');
+          resetForm();
+          setValues({ id: null, name: '', productionDate: '', perishableProduct: false, expirationDate: '', price: 0 });
+        }
       }
-    } else {
-      if (await props.saveProduct(product)) {
-        resetForm();
-      }
+    } catch (error) {
+      resetForm();
+      setValues({ id: null, name: '', productionDate: '', perishableProduct: false, expirationDate: '', price: 0 });
+      props.setLoading(false);
     }
+
+    props.setLoading(false);
   };
 
   return (

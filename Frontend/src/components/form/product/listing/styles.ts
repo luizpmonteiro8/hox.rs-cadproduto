@@ -11,3 +11,9 @@ export const Wrapper = styled.div`
     }
   `}
 `;
+
+export const Table = styled.div`
+  ${({ theme }) => css`
+    min-width: 580px;
+  `}
+`;
