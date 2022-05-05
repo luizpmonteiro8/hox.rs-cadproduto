@@ -32,7 +32,7 @@ const ProductListing = (props: Props) => {
   const [search, setSearch] = useState('');
   const [size, setSize] = useState(10);
   const [orderValue, setOrder] = useState('asc');
-  const [fieldValue, setField] = useState('');
+  const [fieldValue, setField] = useState('name');
 
   useEffect(() => {
     props.setLoading(true);
