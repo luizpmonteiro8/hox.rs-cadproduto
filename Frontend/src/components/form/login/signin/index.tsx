@@ -4,16 +4,28 @@ import { signIn } from 'next-auth/react';
 import { messageError } from 'components';
 import * as Styled from './styles';
 import { useRouter } from 'next/router';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 type Props = {
   setLoading: Dispatch<SetStateAction<boolean>>;
   loading: boolean;
 };
-const Login = ({ setLoading }: Props) => {
+const Login = ({ loading, setLoading }: Props) => {
   const route = useRouter();
+  const [crendetialLoading, setCredencital] = useState<Credential>();
+
+  useEffect(() => {
+    //fix problem heroku login
+    if (loading && crendetialLoading != null) {
+      const interval = setInterval(() => {
+        handleSubmit(crendetialLoading);
+      }, 10000);
+      return () => clearInterval(interval);
+    }
+  }, [loading]);
 
   const handleSubmit = async (credential: Credential) => {
+    setCredencital(credential);
     setLoading(true);
 
     const res = await signIn('credentials', {

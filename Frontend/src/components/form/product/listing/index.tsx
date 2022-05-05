@@ -33,8 +33,6 @@ const ProductListing = (props: Props) => {
   const [fieldValue, setField] = useState('name');
   const [loading, setLoading] = useState(false);
 
-  console.log(loading);
-
   useEffect(() => {
     setLoading(true);
     props.loadPageProduct(0);
