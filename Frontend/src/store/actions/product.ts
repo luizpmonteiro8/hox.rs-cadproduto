@@ -97,8 +97,6 @@ export const DeleteProduct = (id) => {
 
 export const LoadPageProduct = (page: number, size = 10, search = '', order = 'asc', sort = 'name') => {
   const productService = useProductService();
-  console.log(order);
-  console.log(sort);
 
   return async (dispatch) => {
     dispatch(isLoading(true));
