@@ -49,7 +49,7 @@ const ProductListing = (props: Props) => {
         setField={setField}
         loadPageProduct={loadPageProduct}
         setSearch={setSearch}
-        deleteProduct={DeleteProduct}
+        deleteProduct={props.deleteProduct}
       />
 
       {loading === true && <h1 className="m-2">Carregando...</h1>}
