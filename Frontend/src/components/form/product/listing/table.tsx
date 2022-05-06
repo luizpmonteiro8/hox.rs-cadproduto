@@ -179,7 +179,7 @@ export const ProductListingTable = ({
         </div>
       </div>
 
-      <h5>TOTAL DE ITENS: {pagination?.length}</h5>
+      {product.length != 0 && <h5>TOTAL DE ITENS: {pagination?.length}</h5>}
 
       {product.length >= 1 && (
         <Styled.Table>
