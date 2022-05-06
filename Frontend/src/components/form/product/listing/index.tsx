@@ -54,7 +54,9 @@ const ProductListing = (props: Props) => {
 
       {loading === true && <h1 className="m-2">Carregando...</h1>}
       {props.product.length == 0 && loading === false && <h1 className="m-2">Nenhum valor encontrado.</h1>}
-      {props.product.length == 0 && search != '' && <h1 className="m-2">Nenhum valor encontrado.</h1>}
+      {props.product.length == 0 && search != '' && loading === false && (
+        <h1 className="m-2">Nenhum valor encontrado.</h1>
+      )}
     </Styled.Wrapper>
   );
 };
