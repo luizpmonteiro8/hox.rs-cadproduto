@@ -27,11 +27,13 @@ const ProductListing = (props: Props) => {
     setLoading(false);
   }, []);
 
-  const loadPageProduct = (page: number, size?: number, search?: string, order?: string, sort?: string) => {
+  const loadPageProduct = async (page: number, size?: number, search?: string, order?: string, sort?: string) => {
     setLoading(true);
-    props.loadPageProduct(page, size, search, order, sort);
+    await props.loadPageProduct(page, size, search, order, sort);
     setLoading(false);
   };
+
+  console.log(loading);
 
   return (
     <Styled.Wrapper>
