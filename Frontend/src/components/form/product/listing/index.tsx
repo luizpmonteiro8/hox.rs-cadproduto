@@ -33,8 +33,6 @@ const ProductListing = (props: Props) => {
     setLoading(false);
   };
 
-  console.log(loading);
-
   return (
     <Styled.Wrapper>
       {loading && <Loading />}

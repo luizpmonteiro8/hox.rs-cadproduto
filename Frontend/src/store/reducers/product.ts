@@ -45,6 +45,10 @@ const reducer = (state = initialState, action) => {
             return item;
           }
         }),
+        pagination: {
+          ...state.pagination,
+          length: Number(state.pagination.length) - 1,
+        },
       };
     case IS_LOADING_PRODUCT:
       return {
