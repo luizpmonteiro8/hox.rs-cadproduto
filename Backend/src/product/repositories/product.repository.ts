@@ -16,7 +16,7 @@ export class ProductRepository {
       orderBy: { [sort]: order },
     });
 
-    const totalItems = await this.prisma.product.count({ where: { name: { contains: search } } });
+    const totalItems = await this.prisma.product.count({ where: { name: { contains: search, mode: 'insensitive' } } });
 
     return { results, totalItems };
   }
