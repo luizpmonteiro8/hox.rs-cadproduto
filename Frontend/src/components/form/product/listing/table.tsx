@@ -196,7 +196,6 @@ export const ProductListingTable = ({
           />
         </Styled.Table>
       )}
-      {product.length == 0 && <h1 className="m-2">Nenhum valor encontrado.</h1>}
 
       {pagination && (
         <div className="row d-flex justify-content-center">
