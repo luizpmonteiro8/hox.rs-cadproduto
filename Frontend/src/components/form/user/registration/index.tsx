@@ -28,7 +28,7 @@ export const UserRegistration = () => {
         router.push('/');
       })
       .catch((e) => {
-        messageError(e.response.data.message);
+        messageError(e.response.data?.message);
       });
   };
 
