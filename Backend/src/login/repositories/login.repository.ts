@@ -8,9 +8,9 @@ export class LoginRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   //autenticacao
-  async findByLogin(mail: string): Promise<User> {
+  async findByLogin(email: string): Promise<User> {
     const user = await this.prisma.user.findFirst({
-      where: { mail },
+      where: { email },
     });
     if (!user) {
       throw new NotFoundError('Login não encontrado.');

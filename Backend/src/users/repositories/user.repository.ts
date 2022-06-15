@@ -12,7 +12,7 @@ export class UserRepository {
     const results = await this.prisma.user.findMany({
       skip: page * size,
       take: size,
-      where: { mail: { contains: search } },
+      where: { email: { contains: search } },
       orderBy: { [sort]: order },
     });
     const totalItems = results.length;
@@ -29,13 +29,13 @@ export class UserRepository {
 
   async create(createUserDto: CreateUserDto): Promise<any> {
     return this.prisma.user.create({
-      select: { id: true, mail: true },
+      select: { id: true, email: true },
       data: createUserDto,
     });
   }
   async update(id: number, updateUserDto: UpdateUserDto): Promise<any> {
     return this.prisma.user.update({
-      select: { id: true, mail: true },
+      select: { id: true, email: true },
       where: {
         id,
       },

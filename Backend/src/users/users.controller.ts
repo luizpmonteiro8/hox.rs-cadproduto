@@ -14,7 +14,7 @@ export class UsersController {
     return await this.usersService.paginate(
       request.query.hasOwnProperty('page') ? request.query.page : 0,
       request.query.hasOwnProperty('size') ? request.query.size : 10,
-      request.query.hasOwnProperty('sort') ? request.query.sort : 'mail',
+      request.query.hasOwnProperty('sort') ? request.query.sort : 'email',
       request.query.hasOwnProperty('order') ? request.query.order : 'asc',
       request.query.hasOwnProperty('search') ? request.query.search : '',
     );

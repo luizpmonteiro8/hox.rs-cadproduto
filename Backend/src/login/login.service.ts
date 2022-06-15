@@ -12,7 +12,7 @@ export class LoginService {
   constructor(private readonly repository: LoginRepository, private readonly authService: AuthService) {}
 
   public async signin(signinDto: SignInDto): Promise<{ accessToken: string; user: UserEntity }> {
-    const user = await this.repository.findByLogin(signinDto.mail);
+    const user = await this.repository.findByLogin(signinDto.email);
 
     if (!user) {
       throw new NotFoundError('Login inválido.');

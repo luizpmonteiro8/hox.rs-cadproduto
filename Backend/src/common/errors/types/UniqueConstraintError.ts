@@ -9,7 +9,7 @@ export class UniqueConstraintError extends ConflictError {
       case 'name':
         uniqueField = 'nome';
         break;
-      case 'mail':
+      case 'email':
         uniqueField = 'email';
         break;
 

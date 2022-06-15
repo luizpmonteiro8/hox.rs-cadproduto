@@ -10,8 +10,6 @@ export class LoginController {
   @Post()
   @HttpCode(HttpStatus.OK)
   public async signin(@Body() signinDto: SignInDto): Promise<{ accessToken: string; user: UserEntity }> {
-    console.log(signinDto);
-
     return this.loginService.signin(signinDto);
   }
 }
