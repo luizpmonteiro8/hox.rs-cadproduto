@@ -1,5 +1,4 @@
 import { httpClient } from '../http';
-import { EmailDTO } from '../models/user';
 import { User } from '../models/user';
 import axios, { AxiosResponse } from 'axios';
 
@@ -29,7 +28,7 @@ export const useUserService = () => {
     return response.data;
   };
 
-  const forgotPassword = async (emailDTO: EmailDTO): Promise<void> => {
+  const forgotPassword = async (emailDTO: string): Promise<void> => {
     const url = process.env.BASEURL + `/auth/forgot`;
     await axios.post(url, emailDTO);
   };

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { Product } from 'app/models/product';
-import { useProductService } from 'app/services';
+import * as Styled from './styles';
 import { ProductForm } from './form';
 import { useRouter } from 'next/dist/client/router';
 import { SaveProduct, UpdateProduct } from 'store/actions/product';
@@ -53,11 +53,12 @@ const ProductRegistration = (props: Props) => {
   };
 
   return (
-    <div className="card bg-light my-2 mx-auto col-md-8" style={{}}>
-      <h4 className="card-header ">Produto</h4>
-      <ProductForm product={product} onSubmit={handleSubmit} isLoading={props.isLoading} />
-      <div className="card-body"></div>
-    </div>
+    <Styled.Wrapper>
+      <Styled.ContainerMain>
+        <h1>Cadastro de produto</h1>
+        <ProductForm product={product} onSubmit={handleSubmit} isLoading={props.isLoading} />
+      </Styled.ContainerMain>
+    </Styled.Wrapper>
   );
 };
 

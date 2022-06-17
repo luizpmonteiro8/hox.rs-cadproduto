@@ -4,14 +4,13 @@ export const Loading = () => {
   return (
     <Styled.Loading>
       <Styled.Container>
-        <div className="spinner-grow text-light spinner-border spinner-border-sm" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-        <div className="spinner-grow text-light spinner-border spinner-border-sm" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-        <div className="spinner-grow text-light spinner-border spinner-border-sm" role="status">
-          <span className="visually-hidden">Loading...</span>
+        <div className="wrapper">
+          <div className="circle"></div>
+          <div className="circle"></div>
+          <div className="circle"></div>
+          <div className="shadow"></div>
+          <div className="shadow"></div>
+          <div className="shadow"></div>
         </div>
       </Styled.Container>
     </Styled.Loading>

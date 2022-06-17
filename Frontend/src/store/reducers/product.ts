@@ -10,7 +10,7 @@ import { Product } from 'app/models/product';
 
 const initialState = {
   product: [] as Product[],
-  pagination: { length: 0, endIndex: 0 },
+  pagination: { length: 0, endIndex: 0, page: 0 },
   isLoading: false,
 };
 

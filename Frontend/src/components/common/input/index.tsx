@@ -2,10 +2,12 @@
 import { useState } from 'react';
 import * as Styled from './styles';
 import { formatReal } from 'app/util/money/index';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 interface InputProps extends React.LinkHTMLAttributes<HTMLInputElement> {
   id: string;
-  label: string;
+  label?: string;
   columnClasses?: string;
   error?: string;
   formatter?: (value: string) => string;
@@ -18,6 +20,7 @@ interface InputProps extends React.LinkHTMLAttributes<HTMLInputElement> {
   min?: string;
   step?: string;
   autoComplete?: string;
+  marginRightIconPassword?: number;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -52,13 +55,11 @@ export const Input: React.FC<InputProps> = ({
   const [firstLoading, setFirstLoading] = useState<boolean>(true);
 
   return (
-    <div className="form-group">
-      <label className="form-label mb-0" htmlFor={id}>
-        {label}
-      </label>
-      <div>
+    <Styled.Wrapper>
+      {!!label && <label htmlFor={id}>{label}</label>}
+      <>
         <input
-          className={'form-control ' + (error ? 'is-invalid' : '')}
+          className={error ? 'invalid-feedback-input' : ''}
           onChange={onInputChange}
           id={id}
           disabled={disabled}
@@ -79,31 +80,44 @@ export const Input: React.FC<InputProps> = ({
           {...inputProps}
         />
         <div className="invalid-feedback">{error}</div>
-      </div>
-    </div>
+      </>
+    </Styled.Wrapper>
   );
 };
 
-export const InputMoney: React.FC<InputProps> = (props: InputProps) => {
-  return <Input {...props} formatter={formatReal} />;
-};
-
-export const InputPassword: React.FC<InputProps> = ({ id, name, label, onChange, value, error }: InputProps) => {
+export const InputPassword: React.FC<InputProps> = ({
+  id,
+  name,
+  label,
+  onChange,
+  value,
+  error,
+  marginRightIconPassword,
+  ...inputProps
+}: InputProps) => {
   const [visibled, setVisibled] = useState(false);
   return (
     <Styled.Wrapper>
-      <label>{label}</label>
-      <div className="pass-wrapper">
+      {!!label && <label>{label}</label>}
+      <Styled.Password>
         <input
-          className={'form-control ' + (error ? 'is-invalid' : '')}
+          className={error ? 'invalid-feedback-input pass-wrapper' : 'pass-wrapper'}
           id={id}
           name={name}
           type={visibled ? 'text' : 'password'}
           onChange={onChange}
           value={value}
+          {...inputProps}
         />
-        {!error && <i className={visibled ? 'bi-eye-slash' : 'bi-eye'} onClick={() => setVisibled(!visibled)}></i>}
-      </div>
+
+        <FontAwesomeIcon
+          style={{ position: 'absolute', marginRight: marginRightIconPassword }}
+          icon={visibled ? faEyeSlash : faEye}
+          color={error ? 'red' : ''}
+          onClick={() => setVisibled(!visibled)}
+        />
+      </Styled.Password>
+
       <div className="invalid-feedback">{error}</div>
     </Styled.Wrapper>
   );

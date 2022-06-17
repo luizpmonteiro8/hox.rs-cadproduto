@@ -1,5 +1,5 @@
 import { Menu } from 'components';
-import { useEffect, useContext } from 'react';
+import { useEffect } from 'react';
 import * as Styled from './styles';
 import { ToastContainer } from 'react-toastify';
 import { useSession } from 'next-auth/react';
@@ -14,7 +14,6 @@ export const Base = ({ children }: BaseProps) => {
   const route = useRouter();
 
   useEffect(() => {
-    import('bootstrap/dist/js/bootstrap.js');
     if (status === 'unauthenticated') {
       route.push('/');
     }

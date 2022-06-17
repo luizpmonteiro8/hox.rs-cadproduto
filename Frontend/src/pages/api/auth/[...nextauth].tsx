@@ -25,7 +25,7 @@ export default NextAuth({
         if (!credentials.email && !credentials.password) {
           throw new Error('Email e senha requerido.');
         }
-        const credential: User = { mail: credentials.email, password: credentials.password };
+        const credential: User = { email: credentials.email, password: credentials.password };
         const url = `${process.env.BASEURL}/login`;
 
         return await fetch(url, {
@@ -37,13 +37,13 @@ export default NextAuth({
           .then((res) => {
             const authorization = { id: res.accessToken };
 
-            if (authorization) {
+            if (authorization.id) {
               return authorization;
             } else {
-              return null;
+              throw new Error('Email ou senha incorreta!');
             }
           })
-          .catch((error) => {
+          .catch(() => {
             throw new Error('Email ou senha incorreta!');
           });
       },

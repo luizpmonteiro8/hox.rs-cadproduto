@@ -1,6 +1,10 @@
 import * as Styled from './styles';
 import { useRouter } from 'next/dist/client/router';
 import { signOut } from 'next-auth/react';
+import { useState } from 'react';
+import { MenuSide } from './menuSide';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 export type MenuProps = {
   title?: string;
@@ -8,6 +12,7 @@ export type MenuProps = {
 
 export const Menu = ({ title }: MenuProps) => {
   const router = useRouter();
+  const [menuVisible, setMenuVisible] = useState(false);
 
   const logout = () => {
     signOut({ redirect: false });
@@ -16,75 +21,23 @@ export const Menu = ({ title }: MenuProps) => {
     }, 1000);
   };
 
+  const setVisibled = () => {
+    setMenuVisible(!menuVisible);
+  };
+
   return (
-    <Styled.Wrapper>
-      <div className="row">
-        <div className="col-md-12">
-          <nav className="navbar navbar-expand-lg navbar-dark bg-primary ">
-            <div className="col-md-3 ms-1">
-              <a className="navbar-brand text-color" href="/lista/produtos">
-                Cadastro de produtos
-              </a>
-            </div>
-            <div className="col-md-6">
-              <button
-                className="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarColor01"
-                aria-controls="navbarColor01"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span className="navbar-toggler-icon"></span>
-              </button>
-              <div className="collapse navbar-collapse" id="navbarColor01">
-                <ul className="navbar-nav me-auto">
-                  <li className="nav-item dropdown ">
-                    <a
-                      className="dropdown-toggle text-color"
-                      data-bs-toggle="dropdown"
-                      href="#"
-                      role="button"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Cadastrar
-                    </a>
-                    <div className="dropdown-menu">
-                      <a className="dropdown-item" href="/cadastros/produtos">
-                        Produtos
-                      </a>
-                    </div>
-                  </li>
-                  <li className="nav-item dropdown">
-                    <a
-                      className="dropdown-toggle text-color"
-                      data-bs-toggle="dropdown"
-                      href="#"
-                      role="button"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Listar
-                    </a>
-                    <div className="dropdown-menu">
-                      <a className="dropdown-item" href="/lista/produtos">
-                        Produtos
-                      </a>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="col-md-3">
-              <a className="btn btn-light" href="#" role="button" onClick={() => logout()}>
-                Sair
-              </a>
-            </div>
-          </nav>
-        </div>
-      </div>
+    <Styled.Wrapper
+      style={
+        menuVisible ? { top: '-50px', transition: '0.5s ease-in-out' } : { top: '0px', transition: '0.5s ease-in-out' }
+      }
+    >
+      <a onClick={() => router.push('/')}>Sistema cad de prod</a>
+      <FontAwesomeIcon
+        icon={faBars}
+        style={{ width: '30px', height: '40px', marginRight: '30px', cursor: 'pointer' }}
+        onClick={() => setMenuVisible(true)}
+      />
+      <MenuSide menuVisible={menuVisible} setMenuVisible={setMenuVisible} logout={logout} />
     </Styled.Wrapper>
   );
 };

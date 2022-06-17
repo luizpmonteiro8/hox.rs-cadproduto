@@ -1,14 +1,7 @@
 import styled, { css } from 'styled-components';
-import 'bootstrap-icons/font/bootstrap-icons.css';
-import 'bootswatch/dist/lumen/bootstrap.min.css';
-
 export const Wrapper = styled.div`
-  ${({ theme }) =>
-    css`
-      overflow-y: hidden;
-    `}
+  ${({ theme }) => css``}
   body {
-    overflow-y: hidden;
     background-color: '#0000ff';
   }
   .row {

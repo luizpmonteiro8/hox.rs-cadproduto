@@ -3,6 +3,7 @@ import { Input } from 'components/common/input';
 import { validationScheme } from './validationScheme';
 import { useRouter } from 'next/dist/client/router';
 import { Product } from 'app/models/product';
+import * as Styled from './styles';
 
 export type ProductFormProps = {
   product: Product;
@@ -29,10 +30,10 @@ export const ProductForm = ({ product, onSubmit, isLoading }: ProductFormProps) 
   });
 
   return (
-    <form className="form-group" onSubmit={formik.handleSubmit}>
+    <form onSubmit={formik.handleSubmit}>
       <div>
-        <div className="row m-2">
-          <div className="col-md-12 ">
+        <div>
+          <div>
             {
               <Input
                 disabled
@@ -45,7 +46,7 @@ export const ProductForm = ({ product, onSubmit, isLoading }: ProductFormProps) 
             }
           </div>
 
-          <div className="col-md-12 ">
+          <div>
             <Input
               autoFocusValue={true}
               id="name"
@@ -57,25 +58,7 @@ export const ProductForm = ({ product, onSubmit, isLoading }: ProductFormProps) 
             />
           </div>
 
-          <div className="col-md-12 my-2">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              id="perishableProduct"
-              onChange={() => {
-                formik.setFieldValue('perishableProduct', !formik.values.perishableProduct);
-                if (formik.values.perishableProduct == true) {
-                  formik.setFieldValue('expirationDate', '');
-                }
-              }}
-              checked={formik.values.perishableProduct ? true : false}
-            />
-            <label className="form-check-label" htmlFor="blocked">
-              Perecível
-            </label>
-          </div>
-
-          <div className="col-md-6 ">
+          <div>
             <Input
               id="productionDate"
               name="productionDate"
@@ -91,24 +74,43 @@ export const ProductForm = ({ product, onSubmit, isLoading }: ProductFormProps) 
             />
           </div>
 
-          <div className="col-md-6 ">
-            <Input
-              id="expirationDate"
-              name="expirationDate"
-              disabled={formik.values.perishableProduct ? false : true}
-              onChange={formik.handleChange}
-              label="Data de validade"
-              type="date"
-              value={String(formik.values.expirationDate).split('T')[0]}
-              error={
-                formik.errors.expirationDate && formik.touched.expirationDate
-                  ? String(formik.errors.expirationDate)
-                  : ''
-              }
-            />
+          <div style={{ width: '100%', padding: '5px 0px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', padding: '5px 0px' }}>
+              <input
+                className="checkbox"
+                type="checkbox"
+                id="perishableProduct"
+                onChange={() => {
+                  formik.setFieldValue('perishableProduct', !formik.values.perishableProduct);
+                  if (formik.values.perishableProduct == true) {
+                    formik.setFieldValue('expirationDate', '');
+                  }
+                }}
+                checked={formik.values.perishableProduct ? true : false}
+              />
+              <label className="form-check-label" htmlFor="blocked">
+                Perecível
+              </label>
+            </div>
+            <div style={formik.values.perishableProduct ? { display: 'block' } : { display: 'none' }}>
+              <Input
+                id="expirationDate"
+                name="expirationDate"
+                disabled={formik.values.perishableProduct ? false : true}
+                onChange={formik.handleChange}
+                label="Data de validade"
+                type="date"
+                value={String(formik.values.expirationDate).split('T')[0]}
+                error={
+                  formik.errors.expirationDate && formik.touched.expirationDate
+                    ? String(formik.errors.expirationDate)
+                    : ''
+                }
+              />
+            </div>
           </div>
 
-          <div className="col-md-6 ">
+          <div>
             <Input
               id="price"
               name="price"
@@ -120,23 +122,22 @@ export const ProductForm = ({ product, onSubmit, isLoading }: ProductFormProps) 
             />
           </div>
 
-          <div className="row justify-content-center mt-2">
-            <div className="col-md-6  text-center ">
-              <button type="submit" className="btn btn-primary" disabled={isLoading}>
-                Enviar
-              </button>
+          <Styled.Button>
+            <button type="submit" disabled={isLoading}>
+              Enviar
+            </button>
+            <div className="buttonLimpar">
               <a
                 onClick={() => {
                   route.replace('/cadastros/produtos');
                   formik.resetForm();
                   formik.setValues({ ...formSchema });
                 }}
-                className="btn btn-danger ms-2"
               >
                 Limpar
               </a>
             </div>
-          </div>
+          </Styled.Button>
         </div>
       </div>
     </form>
