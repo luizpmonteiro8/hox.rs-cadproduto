@@ -126,8 +126,8 @@ const ProductListing = (props: Props) => {
         icon={faExclamationTriangle}
         color={'red'}
       />
-      {loading === true && <h1 className="m-2">Carregando...</h1>}
-      {props.product.length == 0 && loading === false && <h1 className="m-2">Nenhum valor encontrado.</h1>}
+      {loading === true && <h1>Carregando...</h1>}
+      {props.product.length == 0 && loading === false && <h1>Nenhum valor encontrado.</h1>}
     </Styled.Wrapper>
   );
 };

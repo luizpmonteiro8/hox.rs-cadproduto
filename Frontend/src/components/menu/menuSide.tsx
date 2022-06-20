@@ -38,6 +38,7 @@ export const MenuSide = ({ menuVisible, setMenuVisible, logout }: Props) => {
         <Accordion title="Tema" icon={faGear}>
           <AccordionItem title="Cinza" navigate={() => themeContext.setTheme('greyColor')} icon={faBook} />
           <AccordionItem title="Verde" navigate={() => themeContext.setTheme('greenColor')} icon={faBook} />
+          <AccordionItem title="Azul" navigate={() => themeContext.setTheme('blueColor')} icon={faBook} />
         </Accordion>
       </Accordion>
 

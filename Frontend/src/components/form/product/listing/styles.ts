@@ -12,6 +12,7 @@ export const Wrapper = styled.div`
 
     h1,
     h4 {
+      color: ${theme.colors.textSecundary};
       margin: 0px;
     }
   `}

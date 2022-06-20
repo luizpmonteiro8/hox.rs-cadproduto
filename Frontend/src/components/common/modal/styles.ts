@@ -54,25 +54,5 @@ export const Button = styled.div`
     position: absolute;
     bottom: 10px;
     right: 20px;
-
-    button {
-      border-radius: 5px;
-      border: 1px solid #115191;
-      background-color: #115191;
-      color: #ffffff;
-      font-size: 12px;
-      font-weight: bold;
-      padding: 12px 45px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      transition: transform 80ms ease-in;
-      cursor: pointer;
-      margin-left: 10px;
-    }
-
-    button:hover {
-      transform: scale(0.95);
-      background-color: #324965;
-    }
   `}
 `;

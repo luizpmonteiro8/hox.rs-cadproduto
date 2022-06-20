@@ -27,7 +27,9 @@ export const Menu = ({ title }: MenuProps) => {
         menuVisible ? { top: '-50px', transition: '0.5s ease-in-out' } : { top: '0px', transition: '0.5s ease-in-out' }
       }
     >
-      <a onClick={() => router.push('/')}>Sistema cad de prod</a>
+      <a className="clearButton" onClick={() => router.push('/')}>
+        Sistema cad de prod
+      </a>
       <FontAwesomeIcon
         icon={faBars}
         style={{ width: '30px', height: '40px', marginRight: '30px', cursor: 'pointer' }}

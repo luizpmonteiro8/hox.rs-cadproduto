@@ -27,7 +27,8 @@ export const Wrapper = styled.div`
 
     .page-link:hover {
       transform: scale(0.95);
-      background-color: #324965;
+      border: 1px solid ${theme.colors.buttonMouseHover};
+      background-color: ${theme.colors.buttonMouseHover};
     }
 
     .page-link:focus {

@@ -17,7 +17,7 @@ export const Accordion = ({ title, icon, children }: Props) => {
             {title}
           </div>
 
-          <FontAwesomeIcon className="arrow" icon={faArrowDown} />
+          <FontAwesomeIcon key={title} className="arrow" icon={faArrowDown} />
         </div>
       </summary>
       {children}

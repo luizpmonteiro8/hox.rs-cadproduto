@@ -1,8 +1,13 @@
 /* eslint-disable prettier/prettier */
 import styled, { css } from 'styled-components';
+import { ThemeType } from 'styles/theme';
+
+type Props = {
+  theme: ThemeType;
+};
 
 export const Wrapper = styled.div`
-  ${({ theme }) => css`
+  ${({ theme }: Props) => css`
     display: flex;
     flex-direction: column;
 
@@ -22,7 +27,7 @@ export const Wrapper = styled.div`
     }
 
     input {
-      background-color: #eee;
+      background-color: ${theme.colors.formInputBackground};
       border: none;
       padding: 12px 15px;
       margin: 8px 0;
@@ -30,7 +35,8 @@ export const Wrapper = styled.div`
     }
 
     input:disabled {
-      background-color: #bbbbbb;
+      cursor: not-allowed;
+      background-color: ${theme.colors.formInputBackgroundDisable};
     }
   `}
 `;

@@ -1,7 +1,7 @@
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 import { DefaultTheme, ThemeProvider } from 'styled-components';
 import { GlobalStyles } from 'styles/global-styles';
-import { greyColor, greenColor } from '../../styles/theme';
+import { greyColor, greenColor, blueColor } from '../../styles/theme';
 
 export type PageThemeProviderProps = {
   children: React.ReactNode;
@@ -9,7 +9,7 @@ export type PageThemeProviderProps = {
 
 export type PageThemeContextValues = {
   theme: DefaultTheme;
-  setTheme?: (mode: 'greyColor' | 'greenColor') => void;
+  setTheme?: (mode: 'greyColor' | 'greenColor' | 'blueColor') => void;
 };
 
 export const PageThemeContext = createContext<PageThemeContextValues>({
@@ -34,6 +34,10 @@ export const PageThemeProvider = ({ children }: PageThemeProviderProps) => {
     if (mode === 'greenColor') {
       setPageTheme(greenColor);
       localStorage.setItem('theme', JSON.stringify(greenColor));
+    }
+    if (mode === 'blueColor') {
+      setPageTheme(blueColor);
+      localStorage.setItem('theme', JSON.stringify(blueColor));
     }
   }, []);
 

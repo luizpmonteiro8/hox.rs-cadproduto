@@ -21,29 +21,6 @@ export const Wrapper = styled.div`
     min-width: 250px;
     color: ${theme.colors.text};
 
-    button {
-      border-radius: 20px;
-      border: 1px solid #626262;
-      background-color: #626262;
-      color: #ffffff;
-      font-size: 12px;
-      font-weight: bold;
-      padding: 12px 45px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      transition: transform 80ms ease-in;
-      cursor: pointer;
-    }
-
-    button:hover {
-      transform: scale(0.95);
-      background-color: #324965;
-    }
-
-    button:focus {
-      outline: none;
-    }
-
     a {
       font-family: 'Montserrat', sans-serif;
       font-size: 18px;
