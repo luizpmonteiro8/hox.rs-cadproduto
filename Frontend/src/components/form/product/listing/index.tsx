@@ -69,22 +69,27 @@ const ProductListing = (props: Props) => {
     <Styled.Wrapper>
       {loading && <Loading />}
       <Styled.TitleAndSearch>
+        <div style={{ display: 'flex', alignItems: 'flex-end', marginBottom: '5px' }}>
+          <div> {props.product.length != 0 && <h4>TOTAL DE ITENS: {props.pagination?.length}</h4>}</div>
+        </div>
         <div>
           <h1>Lista de produtos</h1>
-          {props.product.length != 0 && <h4>TOTAL DE ITENS: {props.pagination?.length}</h4>}
         </div>
 
-        <Input
-          id="search"
-          name="search"
-          onChange={async (e) => {
-            setSearch(e.target.value);
-            loadPageProduct(0, size, e.target.value, orderValue, fieldValue);
-          }}
-          value={search}
-          placeholder={'Buscar por produto'}
-          autoComplete="off"
-        />
+        <div>
+          <Input
+            id="search"
+            name="search"
+            style={{ width: '85%' }}
+            onChange={async (e) => {
+              setSearch(e.target.value);
+              loadPageProduct(0, size, e.target.value, orderValue, fieldValue);
+            }}
+            value={search}
+            placeholder={'Buscar por produto'}
+            autoComplete="off"
+          />
+        </div>
       </Styled.TitleAndSearch>
 
       <Styled.Table>

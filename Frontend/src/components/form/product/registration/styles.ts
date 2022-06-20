@@ -11,6 +11,7 @@ export const Wrapper = styled.div`
     justify-content: center;
 
     h1 {
+      align-self: center;
       font-family: 'Montserra';
     }
 

@@ -22,7 +22,8 @@ export const TitleAndSearch = styled.div`
   ${({ theme }: Props) => css`
     display: flex;
     justify-content: space-between;
-    margin-right: 10px;
+    margin-right: 25px;
+    width: 100%;
     color: ${theme.colors.textSecundary};
   `}
 
