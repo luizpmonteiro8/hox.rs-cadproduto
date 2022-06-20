@@ -13,17 +13,24 @@ export const Wrapper = styled.div`
     box-shadow: 5px 20px 50px #000;
     overflow: hidden;
 
-    input {
-      width: 60%;
-      background: #e0dede;
-      justify-content: center;
-      display: flex;
-      margin: 20px auto;
-      padding: 10px;
-      border: none;
-      outline: none;
-      border-radius: 5px;
+    &&& {
+      input {
+        width: 60%;
+        background: #e0dede;
+        justify-content: center;
+        display: flex;
+        margin: 20px auto;
+        padding: 10px;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+      }
+      .buttonSignUp {
+        background: #0000ff;
+      }
     }
+
+    .buttonSignUp,
     button {
       width: 60%;
       height: 40px;
@@ -41,6 +48,8 @@ export const Wrapper = styled.div`
       transition: 0.2s ease-in;
       cursor: pointer;
     }
+
+    .buttonSignUp,
     button:hover {
       background: #87cefa;
     }
@@ -83,7 +92,7 @@ export const SignUp = styled.div`
 export const Login = styled.div`
   ${({ theme }) => css`
     height: 460px;
-    background: #eee;
+    background: #fff;
     border-radius: 60% / 10%;
     transform: translateY(-180px);
     transition: 0.8s ease-in-out;

@@ -40,7 +40,9 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps) => {
           error={formik.touched.password ? formik.errors.password : ''}
           marginRightIconPassword={65}
         />
-        <button type="submit">Criar</button>
+        <button className="buttonSignUp" type="submit">
+          Criar
+        </button>
       </form>
     </Styled.Form>
   );

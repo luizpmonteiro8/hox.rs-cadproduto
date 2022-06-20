@@ -21,10 +21,6 @@ export const Menu = ({ title }: MenuProps) => {
     }, 1000);
   };
 
-  const setVisibled = () => {
-    setMenuVisible(!menuVisible);
-  };
-
   return (
     <Styled.Wrapper
       style={

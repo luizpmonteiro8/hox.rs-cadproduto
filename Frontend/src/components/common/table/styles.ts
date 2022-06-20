@@ -1,14 +1,19 @@
 import styled, { css } from 'styled-components';
+import { ThemeType } from 'styles/theme';
+
+type Props = {
+  theme: ThemeType;
+};
 
 export const Wrapper = styled.div`
-  ${({ theme }) => css`
+  ${({ theme }: Props) => css`
     height: 100%;
     width: 100%;
   `}
 `;
 
 export const Table = styled.table`
-  ${({ theme }) => css`
+  ${({ theme }: Props) => css`
     height: 100%;
     width: 100%;
     font-family: arial, sans-serif;
@@ -21,7 +26,7 @@ export const Table = styled.table`
     th {
       text-align: center;
       padding: 8px;
-      color: black;
+      color: ${theme.colors.textSecundary};
     }
 
     a {
@@ -29,8 +34,8 @@ export const Table = styled.table`
     }
 
     th {
-      background-color: #626262;
-      color: black;
+      background-color: ${theme.colors.primary};
+      color: ${theme.colors.text};
     }
 
     svg {
@@ -38,11 +43,11 @@ export const Table = styled.table`
     }
 
     tr:nth-child(even) {
-      background-color: #c5c5c5;
+      background-color: ${theme.colors.tableSecondBG};
     }
 
     tr:hover {
-      background-color: #d8d8d8;
+      background-color: ${theme.colors.tableMouseOver};
     }
   `}
 `;

@@ -1,22 +1,56 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
-import { formatReal } from 'app/util/money';
+import { faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/router';
 import * as Styled from './styles';
 
 type Props = {
   titles: string[];
   children: React.ReactNode;
+  titleSortActive?: string;
+  sortActiveOrder: string;
+  loadPageProductOrder: any;
 };
 
-export const Table = ({ titles, children }: Props) => {
+export const Table = ({ titles, children, sortActiveOrder, titleSortActive, loadPageProductOrder }: Props) => {
+  const sortIcon = (item) => {
+    if (titleSortActive == item) {
+      if (sortActiveOrder == 'asc') {
+        return <FontAwesomeIcon icon={faArrowUp} style={{ width: '15px', height: '15px' }} />;
+      }
+      if (sortActiveOrder == 'desc') {
+        return <FontAwesomeIcon icon={faArrowDown} style={{ width: '15px', height: '15px' }} />;
+      }
+    } else if (item != 'Ações') {
+      return (
+        <>
+          <FontAwesomeIcon icon={faArrowUp} style={{ width: '15px', height: '15px' }} />
+          <FontAwesomeIcon icon={faArrowDown} style={{ width: '15px', height: '15px' }} />
+        </>
+      );
+    }
+  };
+
   return (
     <Styled.Wrapper>
       <Styled.Table>
         <thead>
           <tr>
             {titles.map((item, index) => (
-              <th key={index}>{item}</th>
+              <th
+                key={item + index}
+                onClick={
+                  item != 'Ações'
+                    ? () => loadPageProductOrder(index)
+                    : () => {
+                        null;
+                      }
+                }
+                style={{ cursor: 'pointer' }}
+              >
+                {item}
+                {sortIcon(item)}
+              </th>
             ))}
           </tr>
         </thead>

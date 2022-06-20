@@ -1,10 +1,15 @@
-import styled, { css } from 'styled-components';
+import styled, { css, DefaultTheme } from 'styled-components';
+import { ThemeType } from 'styles/theme';
+
+type Props = {
+  theme: ThemeType;
+};
 
 export const Wrapper = styled.div`
-  ${({ theme }) => css`
+  ${({ theme }: Props) => css`
     width: 100%;
     height: 50px;
-    background-color: #626262;
+    background-color: ${theme.colors.primary};
     position: fixed;
     top: 0px;
     left: 0px;
@@ -14,6 +19,7 @@ export const Wrapper = styled.div`
     padding-left: 15px;
     justify-content: space-between;
     min-width: 250px;
+    color: ${theme.colors.text};
 
     button {
       border-radius: 20px;
@@ -46,11 +52,18 @@ export const Wrapper = styled.div`
   `}
 `;
 
-export const Menu = styled.div`
-  ${({ theme }) => css`
+type PropsMenu = {
+  menuVisible: boolean;
+};
+
+const menuChanger = (menuVisible: PropsMenu['menuVisible']) => css`
+  left: ${menuVisible ? '0' : '-270px'};
+`;
+
+export const Menu = styled.div<PropsMenu>`
+  ${({ theme, menuVisible }) => css`
     position: fixed;
     top: 0px;
-    left: -270px;
     width: 250px;
     height: 100vh;
     background-color: #f0f0f0;
@@ -58,6 +71,7 @@ export const Menu = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    ${menuChanger(menuVisible)}
 
     details > summary {
       list-style: none;
@@ -125,9 +139,9 @@ export const MenuTitle = styled.div`
   `}
 `;
 
-export const MenuBackground = styled.div`
-  ${({ theme }) => css`
-    display: flex;
+export const MenuBackground = styled.div<PropsMenu>`
+  ${({ theme, menuVisible }) => css`
+    display: ${menuVisible ? 'flex' : 'none'};
     position: fixed;
     left: 250px;
     top: 0px;

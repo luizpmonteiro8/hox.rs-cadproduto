@@ -41,12 +41,14 @@ const Login = ({ loading, setLoading, setScreenLogin }: Props) => {
       password: credential.password,
     });
 
+    console.log('saiu', res);
+
     if (!res.error) {
       route.push('/lista/produtos');
       setLoading(false);
     }
 
-    if (res.error.includes('Email ou senha incorreta')) {
+    if (res.error?.includes('Email ou senha incorreta')) {
       messageError(res.error);
       setLoading(false);
     }

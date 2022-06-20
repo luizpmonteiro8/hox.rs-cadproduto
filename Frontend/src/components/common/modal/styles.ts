@@ -32,6 +32,8 @@ export const ContainerMain = styled.div`
 
 export const Title = styled.div`
   ${({ theme }) => css`
+    display: flex;
+    align-items: center;
     font-family: 'Mountserra';
     margin: 25px;
     font-size: 25px;

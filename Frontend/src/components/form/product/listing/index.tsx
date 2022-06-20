@@ -1,4 +1,4 @@
-import { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import { useState, useEffect } from 'react';
 import { Product } from 'app/models/product';
 import * as Styled from './styles';
 import { connect, ConnectedProps } from 'react-redux';
@@ -7,22 +7,34 @@ import { Loading } from 'components/common/loading';
 import { Table, TableItem } from 'components/common/table';
 import { Modal } from 'components/common/modal';
 import { Input } from 'components/common/input';
+import { Pagination } from 'components/common/pagination';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 type Props = PropsFromRedux;
 
 const ProductListing = (props: Props) => {
   const [search, setSearch] = useState('');
   const [size, setSize] = useState(10);
+  const [page, setPage] = useState(0);
   const [orderValue, setOrder] = useState('asc');
   const [fieldValue, setField] = useState('name');
+
+  //loading page
   const [loading, setLoading] = useState(false);
+
+  //delete modal
   const [activeModalDelete, setActiveModalDelete] = useState(false);
   const [productName, setProductName] = useState('');
   const [productId, setProductId] = useState(0);
 
+  //table
+  const [sortValueIcon, setSortIcon] = useState('Nome'); //portugues
+  const tableTitleHead = ['Id', 'Nome', 'Perecível', 'Data de fabricação', 'Data de Validade', 'Preço', 'Ações'];
+  const tableValue = ['id', 'name', 'perishableProduct', 'productionDate', 'expirationDate', 'price'];
+
   useEffect(() => {
     setLoading(true);
-    props.loadPageProduct(0);
+    props.loadPageProduct(0, size, search, orderValue, fieldValue);
     setLoading(false);
   }, []);
 
@@ -30,7 +42,17 @@ const ProductListing = (props: Props) => {
     setLoading(true);
     await props.loadPageProduct(page, size, search, order, sort);
     setLoading(false);
-    console.log(props.pagination);
+  };
+
+  const loadPageProductOrder = async (index) => {
+    setOrder(orderValue == 'asc' ? 'desc' : 'asc');
+    setSortIcon(tableTitleHead[index]);
+    setField(tableValue[index]);
+
+    setLoading(true);
+    await props.loadPageProduct(page, size, search, orderValue == 'asc' ? 'desc' : 'asc', tableValue[index]);
+    setLoading(false);
+    console.log('depois1', orderValue);
   };
 
   const deleteProduct = () => {
@@ -57,20 +79,23 @@ const ProductListing = (props: Props) => {
           name="search"
           onChange={async (e) => {
             setSearch(e.target.value);
-            setOrder('asc');
-            setField('name');
             loadPageProduct(0, size, e.target.value, orderValue, fieldValue);
           }}
           value={search}
-          label={'Buscar'}
+          placeholder={'Buscar por produtos'}
           autoComplete="off"
         />
       </Styled.TitleAndSearch>
 
       <Styled.Table>
-        <Table titles={['Id', 'Nome', 'Perecível', 'Data de fabricação', 'Data de Validade', 'Preço', 'Ações']}>
+        <Table
+          titles={tableTitleHead}
+          sortActiveOrder={orderValue == 'asc' ? 'desc' : 'asc'}
+          titleSortActive={sortValueIcon}
+          loadPageProductOrder={loadPageProductOrder}
+        >
           <TableItem
-            keys={['id', 'name', 'perishableProduct', 'productionDate', 'expirationDate', 'price']}
+            keys={tableValue}
             type={['string', 'string', 'boolean', 'date', 'date', 'money']}
             returnBoolean={['Sim', 'Não']}
             items={props.product}
@@ -82,69 +107,14 @@ const ProductListing = (props: Props) => {
       </Styled.Table>
 
       {props.pagination?.length > 0 && (
-        <Styled.Pagination>
-          <div style={{ display: 'flex' }}>
-            <button
-              className="page-link"
-              disabled={props.pagination.page === 0 ? true : false}
-              onClick={(e) => {
-                e.preventDefault();
-                loadPageProduct(0, size, search, orderValue, fieldValue);
-              }}
-            >
-              Primeira
-            </button>
-          </div>
-
-          <div style={{ display: 'flex' }}>
-            <button
-              className="page-link"
-              disabled={props.pagination.page === 0 ? true : false}
-              onClick={(e) => {
-                e.preventDefault();
-                loadPageProduct(props.pagination.page - 1, size, search, orderValue, fieldValue);
-              }}
-            >
-              Anterior
-            </button>
-          </div>
-
-          <div style={{ display: 'flex' }}>
-            <span className="page-link-number">
-              Pagina: {String(props.pagination.page + 1)} de {String(props.pagination.lastPage + 1)}
-            </span>
-          </div>
-
-          <div style={{ display: 'flex' }}>
-            <button
-              className="page-link"
-              disabled={
-                props.pagination.page === props.pagination.lastPage || props.pagination.length == 0 ? true : false
-              }
-              onClick={(e) => {
-                e.preventDefault();
-                loadPageProduct(props.pagination.page + 1, size, search, orderValue, fieldValue);
-              }}
-            >
-              Próxima
-            </button>
-          </div>
-
-          <div style={{ display: 'flex' }}>
-            <button
-              className="page-link"
-              disabled={
-                props.pagination.page === props.pagination.lastPage || props.pagination.length == 0 ? true : false
-              }
-              onClick={(e) => {
-                e.preventDefault();
-                loadPageProduct(props.pagination.lastPage, size, search, orderValue, fieldValue);
-              }}
-            >
-              Ultima
-            </button>
-          </div>
-        </Styled.Pagination>
+        <Pagination
+          pagination={props.pagination}
+          loadPageProduct={loadPageProduct}
+          size={size}
+          search={search}
+          orderValue={orderValue}
+          fieldValue={fieldValue}
+        />
       )}
 
       <Modal
@@ -153,6 +123,8 @@ const ProductListing = (props: Props) => {
         title={'Deletar produto'}
         message={`Deseja deletar produto com nome ${productName}?`}
         affirmative={deleteProduct}
+        icon={faExclamationTriangle}
+        color={'red'}
       />
       {loading === true && <h1 className="m-2">Carregando...</h1>}
       {props.product.length == 0 && loading === false && <h1 className="m-2">Nenhum valor encontrado.</h1>}
@@ -168,7 +140,7 @@ const mapStateToProps = ({ product }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadPageProduct: (page: number, size?: number, search?: string, order?: string, sort?: string) =>
+    loadPageProduct: (page: number, size: number, search: string, order: string, sort: string) =>
       dispatch(LoadPageProduct(page, size, search, order, sort)),
     deleteProduct: (id) => dispatch(DeleteProduct(id)),
   };

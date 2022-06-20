@@ -1,6 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
+import { ThemeType } from './theme';
 
-export const GlobalStyles = createGlobalStyle`
+export const GlobalStyles = createGlobalStyle<{ theme: ThemeType }>`
+ html {
+    scroll-behavior: smooth;
+  }
 body {
   margin: 0;
   padding: 0;
@@ -9,7 +13,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #dce0e6;
+  background:${({ theme }) => theme.colors.background} ;
   //linear-gradient(to bottom, #1e90ff, #87cefa, #fff);
 }
 `;

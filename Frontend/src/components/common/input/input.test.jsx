@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { Input, InputMoney } from './index';
+import { Input } from './index';
 import { shallow } from 'enzyme';
 import '@testing-library/jest-dom';
 
@@ -21,14 +21,6 @@ describe('<Input />', () => {
   it('should disabled input when disabled is true', async () => {
     render(<Input id={'Test'} name={'Test'} label={'Test'} disabled={true} />);
     const input = screen.getByLabelText('Test');
-
     expect(input).toBeDisabled();
-  });
-
-  it('should show input with mask money', async () => {
-    render(<InputMoney id={'Test'} name={'Test'} label={'Test'} />);
-
-    const input = screen.getByLabelText('Test');
-    expect(input).toBeInTheDocument();
   });
 });
