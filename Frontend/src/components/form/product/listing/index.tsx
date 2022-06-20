@@ -82,7 +82,7 @@ const ProductListing = (props: Props) => {
             loadPageProduct(0, size, e.target.value, orderValue, fieldValue);
           }}
           value={search}
-          placeholder={'Buscar por produtos'}
+          placeholder={'Buscar por produto'}
           autoComplete="off"
         />
       </Styled.TitleAndSearch>

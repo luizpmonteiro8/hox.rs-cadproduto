@@ -46,7 +46,7 @@ export const Table = ({ titles, children, sortActiveOrder, titleSortActive, load
                         null;
                       }
                 }
-                style={{ cursor: 'pointer' }}
+                style={item != 'Ações' ? { cursor: 'pointer' } : { cursor: 'default' }}
               >
                 {item}
                 {sortIcon(item)}

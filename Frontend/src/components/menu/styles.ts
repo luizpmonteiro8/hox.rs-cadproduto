@@ -20,6 +20,7 @@ export const Wrapper = styled.div`
     justify-content: space-between;
     min-width: 250px;
     color: ${theme.colors.text};
+    z-index: 9999;
 
     a {
       font-family: 'Montserrat', sans-serif;
@@ -31,6 +32,7 @@ export const Wrapper = styled.div`
 
 type PropsMenu = {
   menuVisible: boolean;
+  theme: ThemeType;
 };
 
 const menuChanger = (menuVisible: PropsMenu['menuVisible']) => css`
@@ -48,23 +50,11 @@ export const Menu = styled.div<PropsMenu>`
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 9999;
     ${menuChanger(menuVisible)}
 
     details > summary {
       list-style: none;
-    }
-
-    details[open] > summary {
-    }
-
-    details[open] summary .arrow {
-      transform: rotate(0deg);
-      transition: transform 0.5s;
-    }
-
-    .arrow {
-      transform: rotate(90deg);
-      transition: transform 0.5s;
     }
 
     .title {
@@ -73,13 +63,13 @@ export const Menu = styled.div<PropsMenu>`
       padding: 15px 20px;
       width: 210px;
       cursor: pointer;
-      color: #626262;
+      color: ${theme.colors.menuTextBorder};
     }
 
     .description {
       font-size: 14px;
       padding: 10px;
-      color: #626262;
+      color: ${theme.colors.menuTextBorder};
       margin-left: 35px;
       background-color: #f0f0f0;
       cursor: pointer;
@@ -109,6 +99,7 @@ export const MenuTitle = styled.div`
     font-family: 'Montserra';
     margin-top: 25px;
     margin-bottom: 30px;
+    color: ${theme.colors.menuTextBorder};
 
     p {
       margin: 0;

@@ -13,6 +13,7 @@ export const greyColor = {
     formInputBackgroundDisable: '#BBBBBB',
     formInputBackground: '#EEEEEE',
     buttonMouseHover: '#BBBBBB',
+    menuTextBorder: '#626262',
   },
   font: {
     family: {
@@ -60,6 +61,7 @@ export const blueColor = {
     formInputBackgroundDisable: '#457fca',
     formInputBackground: '#A2BFE5',
     buttonMouseHover: '#A2BFE5',
+    menuTextBorder: '#457fca',
   },
   font: {
     family: {
@@ -107,6 +109,7 @@ export const greenColor = {
     formInputBackgroundDisable: '#7BC4C2',
     formInputBackground: '#95eeea',
     buttonMouseHover: '#116a65',
+    menuTextBorder: '#116a65',
   },
   font: {
     family: {
