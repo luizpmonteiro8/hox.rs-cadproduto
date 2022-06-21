@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
@@ -7,15 +8,21 @@ type Props = {
   title: string;
   children?: React.ReactNode;
   icon?: IconDefinition;
+  open?: boolean;
+  onClick?: (value: string) => void;
 };
 
-export const Accordion = ({ title, icon, children }: Props) => {
-  const [rotateIcon, setRotateIcon] = useState(false);
-
+export const Accordion = ({ title, icon, children, open, onClick = () => {} }: Props) => {
   return (
     <Styled.Accordion>
-      <details className="collapse">
-        <summary className="title" onClick={() => setRotateIcon(!rotateIcon)}>
+      <details className="collapse" open={open}>
+        <summary
+          className="title"
+          onClick={(event) => {
+            event.preventDefault();
+            onClick(title);
+          }}
+        >
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div>
               {!!icon && <FontAwesomeIcon style={{ marginRight: '5px' }} icon={icon} />}
@@ -24,7 +31,7 @@ export const Accordion = ({ title, icon, children }: Props) => {
 
             <FontAwesomeIcon
               style={
-                rotateIcon
+                open
                   ? { transform: 'rotate(0deg)', transition: 'transform 0.5s' }
                   : { transform: 'rotate(90deg)', transition: 'transform 0.5s' }
               }
@@ -38,14 +45,15 @@ export const Accordion = ({ title, icon, children }: Props) => {
   );
 };
 
-export const AccordionChildren = ({ title, icon, children }: Props) => {
-  const [rotateIconChildren, setRotateIconChildren] = useState(false);
-
+export const AccordionChildren = ({ title, icon, children, open, onClick = () => {} }: Props) => {
   return (
-    <details className="collapse">
+    <details className="collapse" open={open}>
       <summary
         className="title"
-        onClick={() => setRotateIconChildren(!rotateIconChildren)}
+        onClick={(event) => {
+          event.preventDefault();
+          onClick(title);
+        }}
         style={{ marginLeft: '25px', width: '185px' }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -56,7 +64,7 @@ export const AccordionChildren = ({ title, icon, children }: Props) => {
 
           <FontAwesomeIcon
             style={
-              rotateIconChildren
+              open
                 ? { transform: 'rotate(0deg)', transition: 'transform 0.5s' }
                 : { transform: 'rotate(90deg)', transition: 'transform 0.5s' }
             }

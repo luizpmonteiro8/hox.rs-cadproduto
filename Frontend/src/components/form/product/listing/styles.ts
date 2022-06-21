@@ -10,6 +10,10 @@ export const Wrapper = styled.div`
     margin-top: 70px;
     margin-bottom: 50px;
 
+    background-color: #fff;
+    border-radius: 25px;
+    padding: 30px;
+
     h1,
     h4 {
       color: ${theme.colors.textSecundary};
