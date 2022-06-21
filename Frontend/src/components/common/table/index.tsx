@@ -23,10 +23,10 @@ export const Table = ({ titles, children, sortActiveOrder, titleSortActive, load
       }
     } else if (item != 'Ações') {
       return (
-        <>
+        <div style={{ minWidth: '32px' }}>
           <FontAwesomeIcon icon={faArrowUp} style={{ width: '15px', height: '15px' }} />
           <FontAwesomeIcon icon={faArrowDown} style={{ width: '15px', height: '15px' }} />
-        </>
+        </div>
       );
     }
   };
@@ -48,8 +48,16 @@ export const Table = ({ titles, children, sortActiveOrder, titleSortActive, load
                 }
                 style={item != 'Ações' ? { cursor: 'pointer' } : { cursor: 'default' }}
               >
-                {item}
-                {sortIcon(item)}
+                <div
+                  style={
+                    item != 'Ações'
+                      ? { display: 'flex', justifyContent: 'center', alignItems: 'center' }
+                      : { display: 'block' }
+                  }
+                >
+                  {item}
+                  {sortIcon(item)}
+                </div>
               </th>
             ))}
           </tr>

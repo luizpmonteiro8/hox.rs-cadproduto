@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { Loading } from './../../components/common/loading/index';
 import { ToastContainer } from 'react-toastify';
 import Login3 from 'components/form/login/login3';
+import { ServerStatus } from 'components/common/serverStatus';
 
 export const LoginTp = () => {
   const [loading, setLoading] = useState(false);
@@ -35,6 +36,7 @@ export const LoginTp = () => {
         draggable
         pauseOnHover
       />
+      <ServerStatus />
       {screenLogin == 1 && <Login setScreenLogin={setScreenLogin} setLoading={setLoading} loading={loading} />}
       {screenLogin == 2 && <Login2 setScreenLogin={setScreenLogin} setLoading={setLoading} loading={loading} />}
       {screenLogin == 3 && <Login3 setScreenLogin={setScreenLogin} setLoading={setLoading} loading={loading} />}

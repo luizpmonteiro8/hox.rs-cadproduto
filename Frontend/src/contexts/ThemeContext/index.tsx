@@ -22,22 +22,34 @@ export const PageThemeProvider = ({ children }: PageThemeProviderProps) => {
   useEffect(() => {
     const localTheme = localStorage.getItem('theme');
     if (!localTheme) return;
-    const newTheme = JSON.parse(localTheme);
-    setPageTheme(newTheme);
+    switch (localTheme) {
+      case 'greyColor':
+        setPageTheme(greyColor);
+        break;
+      case 'greenColor':
+        setPageTheme(greenColor);
+        break;
+      case 'blueColor':
+        setPageTheme(blueColor);
+        break;
+
+      default:
+        break;
+    }
   }, []);
 
   const handleSetTheme: PageThemeContextValues['setTheme'] = useCallback((mode = 'greyColor') => {
     if (mode === 'greyColor') {
       setPageTheme(greyColor);
-      localStorage.setItem('theme', JSON.stringify(greyColor));
+      localStorage.setItem('theme', 'greyColor');
     }
     if (mode === 'greenColor') {
       setPageTheme(greenColor);
-      localStorage.setItem('theme', JSON.stringify(greenColor));
+      localStorage.setItem('theme', 'greenColor');
     }
     if (mode === 'blueColor') {
       setPageTheme(blueColor);
-      localStorage.setItem('theme', JSON.stringify(blueColor));
+      localStorage.setItem('theme', 'blueColor');
     }
   }, []);
 

@@ -22,16 +22,6 @@ const Login3 = ({ loading, setLoading, setScreenLogin }: Props) => {
   const service = useUserService();
   const router = useRouter();
 
-  useEffect(() => {
-    //fix problem heroku login
-    if (loading && crendetialLoading != null) {
-      const interval = setInterval(() => {
-        handleSubmitLogin(crendetialLoading);
-      }, 10000);
-      return () => clearInterval(interval);
-    }
-  }, [loading]);
-
   const handleSubmitLogin = async (credential: Credential) => {
     setCredencital(credential);
     setLoading(true);

@@ -26,6 +26,7 @@ export const Wrapper = styled.div`
       font-family: 'Montserrat', sans-serif;
       font-size: 18px;
       cursor: pointer;
+      padding: 0;
     }
   `}
 `;
@@ -52,7 +53,11 @@ export const Menu = styled.div<PropsMenu>`
     align-items: center;
     z-index: 9999;
     ${menuChanger(menuVisible)}
+  `}
+`;
 
+export const Accordion = styled.div`
+  ${({ theme }) => css`
     details > summary {
       list-style: none;
     }
@@ -125,5 +130,87 @@ export const Footer = styled.div`
   ${({ theme }) => css`
     position: absolute;
     bottom: 10px;
+  `}
+`;
+
+export const MenuBarWrapper = styled.div`
+  ${({ theme }: Props) => css`
+    color: ${theme.colors.text};
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    li {
+      float: left;
+    }
+    a {
+      border-radius: 0;
+    }
+
+    li a,
+    .dropbtn {
+      display: inline-block;
+      color: ${theme.colors.text};
+      text-align: center;
+      padding: 13px 16px;
+      text-decoration: none;
+    }
+
+    li a:hover,
+    .dropdown:hover .dropbtn {
+      background-color: ${theme.colors.tableMouseOver};
+    }
+
+    li.dropdown {
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      background-color: #d8d8d8;
+    }
+
+    .dropdown-content a {
+      color: ${theme.colors.text};
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+      border: none;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #d8d8d8;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .accordion {
+      background-color: ${theme.colors.primary};
+
+      .title {
+        color: ${theme.colors.text};
+        text-transform: uppercase;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 18px;
+      }
+      .description {
+        color: ${theme.colors.text};
+        background-color: ${theme.colors.primary};
+        text-transform: uppercase;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 18px;
+      }
+    }
   `}
 `;

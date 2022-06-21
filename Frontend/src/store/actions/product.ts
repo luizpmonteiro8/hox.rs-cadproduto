@@ -96,8 +96,6 @@ export const DeleteProduct = (id) => {
 };
 
 export const LoadPageProduct = (page: number, size: number, search: string, order: string, sort: string) => {
-  console.log('dentro', page, size, search, order, sort);
-
   const productService = useProductService();
 
   return async (dispatch) => {

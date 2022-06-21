@@ -36,6 +36,7 @@ export const Table = styled.table`
     th {
       background-color: ${theme.colors.primary};
       color: ${theme.colors.text};
+      min-width: 50px;
     }
 
     svg {

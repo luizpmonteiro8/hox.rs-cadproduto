@@ -27,8 +27,17 @@ export const TitleAndSearch = styled.div`
     color: ${theme.colors.textSecundary};
   `}
 
+  .totalItem {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 5px;
+  }
+
   @media (max-width: 540px) {
     flex-direction: column;
+    .totalItem {
+      order: 1;
+    }
   }
 `;
 

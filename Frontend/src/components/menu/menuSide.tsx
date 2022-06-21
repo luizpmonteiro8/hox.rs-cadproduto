@@ -10,10 +10,11 @@ import { PageThemeContext } from 'contexts/ThemeContext';
 type Props = {
   logout: () => void;
   menuVisible: boolean;
+  setMenuTypeChange: (type: string) => void;
   setMenuVisible: any;
 };
 
-export const MenuSide = ({ menuVisible, setMenuVisible, logout }: Props) => {
+export const MenuSide = ({ menuVisible, setMenuVisible, setMenuTypeChange, logout }: Props) => {
   const router = useRouter();
   const themeContext = useContext(PageThemeContext);
 
@@ -29,16 +30,25 @@ export const MenuSide = ({ menuVisible, setMenuVisible, logout }: Props) => {
         />
       </Styled.MenuTitle>
       <Accordion title="Cadastrar" icon={faPencil}>
-        <AccordionItem title="Produtos" navigate={() => router.push('/cadastros/produtos')} icon={faBook} />
+        <AccordionItem title="Produtos" onClick={() => router.push('/cadastros/produtos')} icon={faBook} />
       </Accordion>
       <Accordion title="Listar" icon={faClipboardList}>
-        <AccordionItem title="Produtos" navigate={() => router.push('/lista/produtos')} icon={faBook} />
+        <AccordionItem title="Produtos" onClick={() => router.push('/lista/produtos')} icon={faBook} />
       </Accordion>
       <Accordion title="Configuração" icon={faGear}>
         <AccordionChildren title="Tema" icon={faGear}>
-          <AccordionItem title="Cinza" navigate={() => themeContext.setTheme('greyColor')} icon={faBook} />
-          <AccordionItem title="Verde" navigate={() => themeContext.setTheme('greenColor')} icon={faBook} />
-          <AccordionItem title="Azul" navigate={() => themeContext.setTheme('blueColor')} icon={faBook} />
+          <AccordionItem title="Cinza" onClick={() => themeContext.setTheme('greyColor')} icon={faBook} />
+          <AccordionItem title="Verde" onClick={() => themeContext.setTheme('greenColor')} icon={faBook} />
+          <AccordionItem title="Azul" onClick={() => themeContext.setTheme('blueColor')} icon={faBook} />
+        </AccordionChildren>
+        <AccordionChildren title="Menu" icon={faGear}>
+          <AccordionItem
+            title="Barra"
+            onClick={() => {
+              setMenuTypeChange('bar');
+            }}
+            icon={faBook}
+          />
         </AccordionChildren>
       </Accordion>
 

@@ -110,7 +110,7 @@ export const InputPassword: React.FC<InputProps> = ({
         />
 
         <FontAwesomeIcon
-          style={{ position: 'absolute', marginRight: marginRightIconPassword }}
+          style={{ position: 'absolute', marginRight: marginRightIconPassword, width: '18px', height: '30px' }}
           icon={visibled ? faEyeSlash : faEye}
           color={error ? 'red' : ''}
           onClick={() => setVisibled(!visibled)}

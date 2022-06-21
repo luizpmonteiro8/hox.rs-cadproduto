@@ -17,7 +17,7 @@ const ProductListing = (props: Props) => {
   const [size, setSize] = useState(10);
   const [page, setPage] = useState(0);
   const [orderValue, setOrder] = useState('asc');
-  const [fieldValue, setField] = useState('name');
+  const [fieldValue, setField] = useState('id');
 
   //loading page
   const [loading, setLoading] = useState(false);
@@ -28,7 +28,7 @@ const ProductListing = (props: Props) => {
   const [productId, setProductId] = useState(0);
 
   //table
-  const [sortValueIcon, setSortIcon] = useState('Nome'); //portugues
+  const [sortValueIcon, setSortIcon] = useState('Id'); //portugues
   const tableTitleHead = ['Id', 'Nome', 'Perecível', 'Data de fabricação', 'Data de Validade', 'Preço', 'Ações'];
   const tableValue = ['id', 'name', 'perishableProduct', 'productionDate', 'expirationDate', 'price'];
 
@@ -52,7 +52,6 @@ const ProductListing = (props: Props) => {
     setLoading(true);
     await props.loadPageProduct(page, size, search, orderValue == 'asc' ? 'desc' : 'asc', tableValue[index]);
     setLoading(false);
-    console.log('depois1', orderValue);
   };
 
   const deleteProduct = () => {
@@ -69,8 +68,8 @@ const ProductListing = (props: Props) => {
     <Styled.Wrapper>
       {loading && <Loading />}
       <Styled.TitleAndSearch>
-        <div style={{ display: 'flex', alignItems: 'flex-end', marginBottom: '5px' }}>
-          <div> {props.product.length != 0 && <h4>TOTAL DE ITENS: {props.pagination?.length}</h4>}</div>
+        <div className="totalItem">
+          {props.product.length != 0 && <h4>TOTAL DE ITENS: {props.pagination?.length}</h4>}
         </div>
         <div>
           <h1>Lista de produtos</h1>

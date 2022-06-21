@@ -21,15 +21,11 @@ export default NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials: Credential) {
-        console.log('entrou creden');
-
         if (!credentials.email && !credentials.password) {
           throw new Error('Email e senha requerido.');
         }
         const credential: User = { email: credentials.email, password: credentials.password };
         const url = `${process.env.BASEURL}/login`;
-        console.log('credential', credential);
-        console.log('url', url);
 
         return await fetch(url, {
           method: 'POST',
@@ -38,8 +34,6 @@ export default NextAuth({
         })
           .then((response) => response.json())
           .then((res) => {
-            console.log('res', res);
-
             const authorization = { id: res.accessToken };
 
             if (authorization.id) {

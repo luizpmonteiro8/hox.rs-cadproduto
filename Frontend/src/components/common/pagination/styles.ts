@@ -67,9 +67,11 @@ export const Wrapper = styled.div`
     @media (max-width: 750px) {
       flex-direction: column;
       justify-content: center;
+      .page-link:disabled,
       .page-link,
       .page-link-number {
         margin-bottom: 5px;
+        padding: 10px 25px;
       }
     }
   `}
