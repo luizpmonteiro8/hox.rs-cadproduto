@@ -15,22 +15,19 @@ export const Menu = ({ title }: MenuProps) => {
   const router = useRouter();
   const [menuVisible, setMenuVisible] = useState(false);
   const [menuType, setMenuType] = useState('side');
-  const width = window.innerWidth;
 
-  useEffect(() => {
-    console.log(width);
-
-    if (width < 920) {
+  window.onresize = () => {
+    if (window.innerWidth < 920) {
       setMenuType('side');
       localStorage.setItem('menu', 'side');
     }
+  };
 
-    console.log(width);
-
+  useEffect(() => {
     const menu = localStorage.getItem('menu');
     if (!menu) return;
     setMenuType(menu);
-  }, [width]);
+  }, []);
 
   const logout = () => {
     signOut({ redirect: false });
